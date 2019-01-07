@@ -1,7 +1,8 @@
 window.onload = () => {
   const winCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
-  var remainingSpaces = [0,1,2,3,4,5,6,7,8];
+  var remainingSpaces = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   var playerCombo = [];
+  var cpuCombo = [];
 
 
   var boardItems = document.getElementsByClassName('boardItem');
@@ -9,13 +10,14 @@ window.onload = () => {
 
   //define reset button function
   var resetAll = () => {
-    remainingSpaces = [0,1,2,3,4,5,6,7,8]
+    remainingSpaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     playerCombo = [];
+    cpuCombo = [];
     for (var i = 0; i < boardItems.length; i++) {
       boardItems[i].textContent = '[  ]';
     }
     for (var i = 0; i < boardItems.length; i++) {//reset click handlers
-      boardItems[i].onclick = playerMoves;
+      boardItems[i].addEventListener('click', playerMoves, false);
     }
   };
 
@@ -38,22 +40,36 @@ window.onload = () => {
     playerCombo.push(Number(element.id));
     playerCombo.sort((a, b) => a - b);
 
-    remainingSpaces.splice(remainingSpaces.indexOf(element.id), 1)
-    console.log(remainingSpaces)
+    remainingSpaces.splice(remainingSpaces.indexOf(Number(element.id)), 1)
 
-    if (playerCombo.length > 2 && checkCombo(playerCombo)) {
+    if (checkCombo(playerCombo)) {
       for (var i = 0; i < boardItems.length; i++) {//remove click handlers
-        boardItems[i].onclick = null;
+        boardItems[i].removeEventListener('click', playerMoves, false);
       }
       console.log('u win')//winning message?
+
+    } else {//if player has not won
+      var cpuMoves = remainingSpaces[Math.floor(Math.random() * remainingSpaces.length)];
+
+      document.getElementById(cpuMoves).textContent = '[o]';
+      remainingSpaces.splice(remainingSpaces.indexOf(cpuMoves), 1)
+      cpuCombo.push(cpuMoves);
+
+      if (checkCombo(cpuCombo)) {
+        console.log(cpuCombo)
+        for (var i = 0; i < boardItems.length; i++) {//remove click handlers
+          boardItems[i].removeEventListener('click', playerMoves, false);
+        }
+        console.log('u lose')//losing message?
+      }
     }
   }
 
   //add click handlers to board and reset button
   for (var i = 0; i < boardItems.length; i++) {
-    boardItems[i].onclick = playerMoves;
+    boardItems[i].addEventListener('click', playerMoves, false);
   }
-  resetButton.onclick = resetAll;
+  resetButton.addEventListener('click', resetAll, false);
 };
 
 
