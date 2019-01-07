@@ -10,7 +10,7 @@ window.onload = () => {
 
   //define reset button function
   var resetAll = () => {
-    remainingSpaces = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    remainingSpaces = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     playerCombo = [];
     cpuCombo = [];
     for (var i = 0; i < boardItems.length; i++) {
@@ -19,9 +19,10 @@ window.onload = () => {
     for (var i = 0; i < boardItems.length; i++) {//reset click handlers
       boardItems[i].addEventListener('click', playerMoves, false);
     }
+    document.getElementById('winMsg').textContent = '';
   };
 
-  //define function to check if player wins
+  //define function to check if player or cpu wins
   var checkCombo = (combo) => {
     for (var i = 0; i < winCombos.length; i++) {
       if (winCombos[i].every((item) => { return combo.includes(item) })) {
@@ -30,25 +31,17 @@ window.onload = () => {
     }
   };
 
-  //define what happens when player clicks a space
-  var playerMoves = (e) => {
-    console.log(e)
-    var element = document.getElementById(e.target.id)
-    if (e.target.textContent === '[  ]') {
-      element.textContent = '[x]'
-    };
-    playerCombo.push(Number(element.id));
-    playerCombo.sort((a, b) => a - b);
+  //define what happens on a tie
+  var checkTie = () => {
+    if (!checkCombo(cpuCombo) && !checkCombo(playerCombo) && remainingSpaces.length === 0) {
+      document.getElementById('winMsg').textContent = 'It\'s a tie!';
+      return true;
+    }
+  }
 
-    remainingSpaces.splice(remainingSpaces.indexOf(Number(element.id)), 1)
-
-    if (checkCombo(playerCombo)) {
-      for (var i = 0; i < boardItems.length; i++) {//remove click handlers
-        boardItems[i].removeEventListener('click', playerMoves, false);
-      }
-      console.log('u win')//winning message?
-
-    } else {//if player has not won
+  //define what happens on cpus turn
+  var cpuTurn = () => {
+    if (!checkTie()) {
       var cpuMoves = remainingSpaces[Math.floor(Math.random() * remainingSpaces.length)];
 
       document.getElementById(cpuMoves).textContent = '[o]';
@@ -56,11 +49,32 @@ window.onload = () => {
       cpuCombo.push(cpuMoves);
 
       if (checkCombo(cpuCombo)) {
-        console.log(cpuCombo)
         for (var i = 0; i < boardItems.length; i++) {//remove click handlers
           boardItems[i].removeEventListener('click', playerMoves, false);
         }
-        console.log('u lose')//losing message?
+        document.getElementById('winMsg').textContent = 'You Lose!'//losing message?
+      }
+    }
+  }
+
+
+  //define what happens when player clicks a space
+  var playerMoves = (e) => {
+    var element = document.getElementById(e.target.id)
+    if (e.target.textContent === '[  ]') {
+      element.textContent = '[x]'
+
+      playerCombo.push(Number(element.id));
+      remainingSpaces.splice(remainingSpaces.indexOf(Number(element.id)), 1)
+
+      if (checkCombo(playerCombo)) {
+        for (var i = 0; i < boardItems.length; i++) {//remove click handlers
+          boardItems[i].removeEventListener('click', playerMoves, false);
+        }
+        document.getElementById('winMsg').textContent = 'You Win!'//winning message?
+
+      } else {//if player has not won
+        cpuTurn();
       }
     }
   }
