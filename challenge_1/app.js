@@ -4,7 +4,7 @@ window.onload = () => {
   var playerCombo = [];
   var cpuCombo = [];
 
-
+  var board = document.getElementById('board');
   var boardItems = document.getElementsByClassName('boardItem');
   const resetButton = document.getElementById('resetButton');
 
@@ -57,15 +57,14 @@ window.onload = () => {
     }
   }
 
-
-  //define what happens when player clicks a space
+  //define what happens when player clicks an empty space
   var playerMoves = (e) => {
-    var element = document.getElementById(e.target.id)
-    if (e.target.textContent === '[  ]') {
-      element.textContent = '[x]'
+    //var element = document.getElementById(e.target.id)
+    if (e.textContent === '[  ]') {
+      e.textContent = '[x]'
 
-      playerCombo.push(Number(element.id));
-      remainingSpaces.splice(remainingSpaces.indexOf(Number(element.id)), 1)
+      playerCombo.push(Number(e.id));
+      remainingSpaces.splice(remainingSpaces.indexOf(Number(e.id)), 1)
 
       if (checkCombo(playerCombo)) {
         for (var i = 0; i < boardItems.length; i++) {//remove click handlers
@@ -79,10 +78,15 @@ window.onload = () => {
     }
   }
 
-  //add click handlers to board and reset button
-  for (var i = 0; i < boardItems.length; i++) {
-    boardItems[i].addEventListener('click', playerMoves, false);
+  //define what happens when board is clicked
+  var boardClicked = (e) => {
+    if (e.target.className = 'boardItem'){
+      playerMoves(e.target);
+    }
   }
+
+  //add click handlers to board and reset button
+  board.addEventListener('click', boardClicked, false);
   resetButton.addEventListener('click', resetAll, false);
 };
 
