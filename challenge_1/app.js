@@ -1,6 +1,9 @@
 window.onload = () => {
   const winCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
   var remainingSpaces = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  var currentWinner = 'x';
+  var playerScore = 0;
+  var cpuScore = 0;
   var playerCombo = [];
   var cpuCombo = [];
 
@@ -16,10 +19,11 @@ window.onload = () => {
     for (var i = 0; i < boardItems.length; i++) {
       boardItems[i].textContent = '[  ]';
     }
-    for (var i = 0; i < boardItems.length; i++) {//reset click handlers
-      boardItems[i].addEventListener('click', playerMoves, false);
-    }
+    board.addEventListener('click', boardClicked, false);//reset click handlers
     document.getElementById('winMsg').textContent = '';
+    if (currentWinner === 'o') {
+      cpuTurn();
+    }
   };
 
   //define function to check if player or cpu wins
@@ -35,6 +39,7 @@ window.onload = () => {
   var checkTie = () => {
     if (!checkCombo(cpuCombo) && !checkCombo(playerCombo) && remainingSpaces.length === 0) {
       document.getElementById('winMsg').textContent = 'It\'s a tie!';
+      board.removeEventListener('click', boardClicked, false);//remove click handlers
       return true;
     }
   }
@@ -49,9 +54,11 @@ window.onload = () => {
       cpuCombo.push(cpuMoves);
 
       if (checkCombo(cpuCombo)) {
-        for (var i = 0; i < boardItems.length; i++) {//remove click handlers
-          boardItems[i].removeEventListener('click', playerMoves, false);
-        }
+        board.removeEventListener('click', boardClicked, false);//remove click handlers
+
+        cpuScore++;
+        currentWinner = "o";
+        document.getElementById('cpuScore').textContent = 'O score: ' + cpuScore;
         document.getElementById('winMsg').textContent = 'You Lose!'//losing message?
       }
     }
@@ -59,17 +66,19 @@ window.onload = () => {
 
   //define what happens when player clicks an empty space
   var playerMoves = (e) => {
-    //var element = document.getElementById(e.target.id)
     if (e.textContent === '[  ]') {
       e.textContent = '[x]'
 
       playerCombo.push(Number(e.id));
       remainingSpaces.splice(remainingSpaces.indexOf(Number(e.id)), 1)
+      checkTie();
 
       if (checkCombo(playerCombo)) {
-        for (var i = 0; i < boardItems.length; i++) {//remove click handlers
-          boardItems[i].removeEventListener('click', playerMoves, false);
-        }
+        board.removeEventListener('click', boardClicked, false);//remove click handlers
+
+        playerScore++;
+        currentWinner = "x";
+        document.getElementById('playerScore').textContent = 'X score: ' + playerScore;
         document.getElementById('winMsg').textContent = 'You Win!'//winning message?
 
       } else {//if player has not won
@@ -80,7 +89,7 @@ window.onload = () => {
 
   //define what happens when board is clicked
   var boardClicked = (e) => {
-    if (e.target.className = 'boardItem'){
+    if (e.target.className === 'boardItem') {
       playerMoves(e.target);
     }
   }
