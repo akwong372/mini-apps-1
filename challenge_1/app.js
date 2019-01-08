@@ -6,6 +6,7 @@ window.onload = () => {
   var cpuScore = 0;
   var playerCombo = [];
   var cpuCombo = [];
+  document.getElementById('playerName').textContent = prompt("Please Enter Your Name")
 
   var board = document.getElementById('board');
   var boardItems = document.getElementsByClassName('boardItem');
@@ -35,13 +36,17 @@ window.onload = () => {
     }
   };
 
-  //define what happens on a tie
+  //check for a tie
   var checkTie = () => {
     if (!checkCombo(cpuCombo) && !checkCombo(playerCombo) && remainingSpaces.length === 0) {
-      document.getElementById('winMsg').textContent = 'It\'s a tie!';
-      board.removeEventListener('click', boardClicked, false);//remove click handlers
       return true;
     }
+  }
+
+  //define what happens on a tie
+  var setTie = () => {
+    document.getElementById('winMsg').textContent = 'It\'s a tie!';
+    board.removeEventListener('click', boardClicked, false);//remove click handlers
   }
 
   //define what happens on cpus turn
@@ -61,6 +66,8 @@ window.onload = () => {
         document.getElementById('cpuScore').textContent = 'O score: ' + cpuScore;
         document.getElementById('winMsg').textContent = 'You Lose!'//losing message?
       }
+    } else {
+      setTie();
     }
   }
 
@@ -71,18 +78,21 @@ window.onload = () => {
 
       playerCombo.push(Number(e.id));
       remainingSpaces.splice(remainingSpaces.indexOf(Number(e.id)), 1)
-      checkTie();
 
-      if (checkCombo(playerCombo)) {
-        board.removeEventListener('click', boardClicked, false);//remove click handlers
+      if (!checkTie()) {
+        if (checkCombo(playerCombo)) {
+          board.removeEventListener('click', boardClicked, false);//remove click handlers
 
-        playerScore++;
-        currentWinner = "x";
-        document.getElementById('playerScore').textContent = 'X score: ' + playerScore;
-        document.getElementById('winMsg').textContent = 'You Win!'//winning message?
+          playerScore++;
+          currentWinner = "x";
+          document.getElementById('playerScore').textContent = 'X score: ' + playerScore;
+          document.getElementById('winMsg').textContent = 'You Win!'//winning message?
 
-      } else {//if player has not won
-        cpuTurn();
+        } else {//if player has not won
+          cpuTurn();
+        }
+      } else {
+        setTie();
       }
     }
   }
