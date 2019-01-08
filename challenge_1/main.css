@@ -1,4 +1,17 @@
-ul li {
-  display: inline;
-  margin: 10px
+.boardItem {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top:10px;
+  padding-bottom: 10px;
+  transition: background-color .2s ease-in;
+}
+
+.boardItem:hover {
+  background-color: silver
+}
+
+header {
+  text-align: center;
+  margin: 20px
 }

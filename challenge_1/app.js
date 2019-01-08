@@ -6,10 +6,10 @@ window.onload = () => {
   var cpuScore = 0;
   var playerCombo = [];
   var cpuCombo = [];
-  document.getElementById('playerName').textContent = prompt("Please Enter Your Name")
+  //document.getElementById('playerName').textContent = prompt("Please Enter Your Name")
 
   var board = document.getElementById('board');
-  var boardItems = document.getElementsByClassName('boardItem');
+  var boardItems = document.getElementsByClassName('boardItem col-sm-4');
   const resetButton = document.getElementById('resetButton');
 
   //define reset button function
@@ -99,7 +99,7 @@ window.onload = () => {
 
   //define what happens when board is clicked
   var boardClicked = (e) => {
-    if (e.target.className === 'boardItem') {
+    if (e.target.className === 'boardItem col-sm-4') {
       playerMoves(e.target);
     }
   }

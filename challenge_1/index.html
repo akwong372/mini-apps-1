@@ -13,26 +13,26 @@
 
 <body>
   <header>Best Tic Tac Toe Ever</header>
-  <main>
+  <main class="container everything">
     <div id="board" class="board">
-      <ul class="topRow">
-        <li id="0" class="boardItem">[  ]</li>
-        <li id="1" class="boardItem">[  ]</li>
-        <li id="2" class="boardItem">[  ]</li>
-      </ul>
-      <ul class="midRow">
-        <li id="3" class="boardItem">[  ]</li>
-        <li id="4" class="boardItem">[  ]</li>
-        <li id="5" class="boardItem">[  ]</li>
-      </ul>
-      <ul class="botRow">
-        <li id="6" class="boardItem">[  ]</li>
-        <li id="7" class="boardItem">[  ]</li>
-        <li id="8" class="boardItem">[  ]</li>
-      </ul>
+      <div class="topRow row">
+        <div id="0" class="boardItem col-sm-4">[  ]</div>
+        <div id="1" class="boardItem col-sm-4">[  ]</div>
+        <div id="2" class="boardItem col-sm-4">[  ]</div>
+      </div>
+      <div class="midRow row">
+        <div id="3" class="boardItem col-sm-4">[  ]</div>
+        <div id="4" class="boardItem col-sm-4">[  ]</div>
+        <div id="5" class="boardItem col-sm-4">[  ]</div>
+      </div>
+      <div class="botRow row">
+        <div id="6" class="boardItem col-sm-4">[  ]</div>
+        <div id="7" class="boardItem col-sm-4">[  ]</div>
+        <div id="8" class="boardItem col-sm-4">[  ]</div>
+      </div>
     </div>
     <div>
-      <button id="resetButton" class="reset" type="button">reset</button>
+      <button id="resetButton" class="reset btn btn-primary" type="button">reset</button>
       <p id="winMsg"></p>
     </div>
     <br>
