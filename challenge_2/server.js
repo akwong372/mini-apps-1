@@ -17,4 +17,9 @@ app.get('/', (req, res) => {
   res.send('test');
 });
 
+app.post('/', (req, res) => {
+  console.log('thing')
+  res.send('test');
+});
+
 app.listen(port, () => console.log(`listening on port ${port}`))
