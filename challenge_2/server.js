@@ -19,6 +19,7 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
+app.set('view engine', 'ejs');
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({
   extended: true
@@ -26,77 +27,59 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('test');
+  res.render('client/index');
 });
 
 app.post('/', (req, res) => {
-  // console.log('main')
-  // console.log(JSON.parse(req.body.jsonSubmit))
-   var response = jsonHandle(JSON.parse(req.body.jsonSubmit));
-   fs.writeFile('new_csv_report.csv', response, 'utf8', (err)=>{
-     if (err){
-      console.log('something went wrong', err)
+  var response = jsonHandle(JSON.parse(req.body.jsonSubmit));
+  fs.writeFile('new_csv_report.csv', response, 'utf8', (err) => {
+    if (err) {
+      console.log('something went wrong', err);
       res.redirect('/');
-     }
-   })
-   console.log('success')
-   res.send(`<body>
-   <header>
-     <h1>interesting title</h1>
-   </header>
-   <main>
-     <div id="formArea">
-       <form id="mainForm" method="POST" action="/">
-         Enter data and stuff:
-         <br>
-         <textarea name="jsonSubmit" form="mainForm"></textarea>
-         <br>
-         <input type="submit">
-       </form>
-     </div>
-     <p id="successErrorMsg"></p>
-   </main>
-   <footer></footer>
- </body>`);
-
- // res.send(res.body)
+    }
+  })
+  console.log('success');
+  // res.send(`<body>
+  //  <header>
+  //    <h1>interesting title</h1>
+  //  </header>
+  //  <main>
+  //    <div id="formArea">
+  //      <form id="mainForm" method="POST" action="/">
+  //        Enter data and stuff:
+  //        <br>
+  //        <textarea name="jsonSubmit" form="mainForm"></textarea>
+  //        <br>
+  //        <input type="submit">
+  //      </form>
+  //    </div>
+  //    <p id="successErrorMsg">Success!</p>
+  //  </main>
+  //  <footer style="white-space: pre-line">${response}</footer>
+  //  </body>` );
+  res.render('client/index');
 });
-
-// app.post('/submit', (req, res) => {
-//   console.log('submit')
-//   console.log(req.body)
-//   console.log(req.headers)
-//   res.redirect('/');
-//   res.send(res.body)
-// });
 
 //function to handle submitted json
 var jsonHandle = (jsonObj) => {
   var csvResult = [];
   var personData = [];
   //create an array of columns
-  var columns = Object.keys(jsonObj).slice(0,6);
+  var columns = Object.keys(jsonObj).slice(0, 6);
 
   csvResult.push(columns);
 
-  //loop through json object
-    //add the value of each key to placeholder array
-    //push placeholder array to result array
-    //reset placeholder array
-    //if there are children
-      //run the function on each of them?
-
   //adds a new row for every object
   var addRow = (obj) => {
-    for (var i = 0; i < columns.length; i++){
+    for (var i = 0; i < columns.length; i++) {
       personData.push(obj[columns[i]]);
     }
     csvResult.push(personData.join(','));
     personData = [];
 
     //call function on children if the children array is not empty
-    if (obj.children.length > 0){
-      for (var i = 0; i<obj.children.length; i++){
+    if (obj.children.length > 0) {
+      for (var i = 0; i < obj.children.length; i++) {
         addRow(obj.children[i]);
       }
     }
@@ -104,7 +87,7 @@ var jsonHandle = (jsonObj) => {
 
   addRow(jsonObj);
 
-return csvResult.join('\n')
+  return csvResult.join('\n');
 }
 
 app.listen(port, () => console.log(`listening on port ${port}`))
