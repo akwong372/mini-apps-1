@@ -41,28 +41,29 @@ app.post('/', (req, res) => {
   fs.writeFile('new_csv_report.csv', response, 'utf8', (err) => {
     if (err) {
       console.log('something went wrong', err);
-      res.redirect('/');
+      //res.redirect('/');
     }
   })
-  console.log('success');
-  res.send(`<body>
-   <header>
-     <h1>interesting title</h1>
-   </header>
-   <main>
-     <div id="formArea">
-       <form id="mainForm" method="POST" action="/" accept="application/JSON" enctype="multipart/form-data">
-         Enter data and stuff:
-         <br>
-         <input name="jsonUpload" id="jsonUpload" type="file">
-         <br>
-         <input type="submit">
-       </form>
-     </div>
-     <p id="successErrorMsg">Success!</p>
-   </main>
-   <footer style="white-space: pre-line">${response}</footer>
-   </body>` );
+  console.log('success', req.files);
+  res.send(response)
+  // res.send(`<body>
+  //  <header>
+  //    <h1>interesting title</h1>
+  //  </header>
+  //  <main>
+  //    <div id="formArea">
+  //      <form id="mainForm" method="POST" action="/" accept="application/JSON" enctype="multipart/form-data">
+  //        Enter data and stuff:
+  //        <br>
+  //        <input name="jsonUpload" id="jsonUpload" type="file">
+  //        <br>
+  //        <input type="submit">
+  //      </form>
+  //    </div>
+  //    <p id="successErrorMsg">Success!</p>
+  //  </main>
+  //  <footer style="white-space: pre-line">${response}</footer>
+  //  </body>` );
 });
 
 //function to handle submitted json
