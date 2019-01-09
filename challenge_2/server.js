@@ -13,25 +13,31 @@
 
 
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const fs = require('fs');
 
 const app = express();
 const port = 3000;
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
+app.use(fileUpload());
 app.use(express.static('client'));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
+// app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.render('client/index');
+  res.send('test');
 });
 
 app.post('/', (req, res) => {
-  var response = jsonHandle(JSON.parse(req.body.jsonSubmit));
+  if (Object.keys(req.files).length === 0) {
+    return res.status(400).redirect('/');
+  }
+
+  var response = jsonHandle(JSON.parse(req.files.jsonUpload.data));
   fs.writeFile('new_csv_report.csv', response, 'utf8', (err) => {
     if (err) {
       console.log('something went wrong', err);
@@ -39,25 +45,24 @@ app.post('/', (req, res) => {
     }
   })
   console.log('success');
-  // res.send(`<body>
-  //  <header>
-  //    <h1>interesting title</h1>
-  //  </header>
-  //  <main>
-  //    <div id="formArea">
-  //      <form id="mainForm" method="POST" action="/">
-  //        Enter data and stuff:
-  //        <br>
-  //        <textarea name="jsonSubmit" form="mainForm"></textarea>
-  //        <br>
-  //        <input type="submit">
-  //      </form>
-  //    </div>
-  //    <p id="successErrorMsg">Success!</p>
-  //  </main>
-  //  <footer style="white-space: pre-line">${response}</footer>
-  //  </body>` );
-  res.render('client/index');
+  res.send(`<body>
+   <header>
+     <h1>interesting title</h1>
+   </header>
+   <main>
+     <div id="formArea">
+       <form id="mainForm" method="POST" action="/" accept="application/JSON" enctype="multipart/form-data">
+         Enter data and stuff:
+         <br>
+         <input name="jsonUpload" id="jsonUpload" type="file">
+         <br>
+         <input type="submit">
+       </form>
+     </div>
+     <p id="successErrorMsg">Success!</p>
+   </main>
+   <footer style="white-space: pre-line">${response}</footer>
+   </body>` );
 });
 
 //function to handle submitted json

@@ -16,10 +16,11 @@
   </header>
   <main>
     <div id="formArea">
-      <form id="mainForm" method="POST" action="/">
+      <form id="mainForm" method="POST" action="/" accept="application/JSON" enctype="multipart/form-data">
         Enter data and stuff:
         <br>
-        <textarea name="jsonSubmit" form="mainForm"></textarea>
+        <input name="jsonUpload" id="jsonUpload" type="file">
+        <!-- <textarea name="jsonSubmit" form="mainForm"></textarea> -->
         <br>
         <input type="submit">
       </form>
