@@ -35,11 +35,29 @@ app.post('/', (req, res) => {
    var response = jsonHandle(JSON.parse(req.body.jsonSubmit));
    fs.writeFile('new_csv_report.csv', response, 'utf8', (err)=>{
      if (err){
-      console.log('not valid json')
+      console.log('something went wrong', err)
       res.redirect('/');
      }
    })
-   res.send(response);
+   console.log('success')
+   res.send(`<body>
+   <header>
+     <h1>interesting title</h1>
+   </header>
+   <main>
+     <div id="formArea">
+       <form id="mainForm" method="POST" action="/">
+         Enter data and stuff:
+         <br>
+         <textarea name="jsonSubmit" form="mainForm"></textarea>
+         <br>
+         <input type="submit">
+       </form>
+     </div>
+     <p id="successErrorMsg"></p>
+   </main>
+   <footer></footer>
+ </body>`);
 
  // res.send(res.body)
 });
@@ -68,6 +86,7 @@ var jsonHandle = (jsonObj) => {
     //if there are children
       //run the function on each of them?
 
+  //adds a new row for every object
   var addRow = (obj) => {
     for (var i = 0; i < columns.length; i++){
       personData.push(obj[columns[i]]);
@@ -75,6 +94,7 @@ var jsonHandle = (jsonObj) => {
     csvResult.push(personData.join(','));
     personData = [];
 
+    //call function on children if the children array is not empty
     if (obj.children.length > 0){
       for (var i = 0; i<obj.children.length; i++){
         addRow(obj.children[i]);
