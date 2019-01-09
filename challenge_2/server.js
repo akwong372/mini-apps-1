@@ -14,6 +14,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -31,9 +32,16 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   // console.log('main')
   // console.log(JSON.parse(req.body.jsonSubmit))
-  jsonHandle(JSON.parse(req.body.jsonSubmit))
-  res.redirect('/');
-  res.send(res.body)
+   var response = jsonHandle(JSON.parse(req.body.jsonSubmit));
+   fs.writeFile('new_csv_report.csv', response, 'utf8', (err)=>{
+     if (err){
+      console.log('not valid json')
+      res.redirect('/');
+     }
+   })
+   res.send(response);
+
+ // res.send(res.body)
 });
 
 // app.post('/submit', (req, res) => {
@@ -76,7 +84,7 @@ var jsonHandle = (jsonObj) => {
 
   addRow(jsonObj);
 
-console.log(csvResult.join('\n'))
+return csvResult.join('\n')
 }
 
 app.listen(port, () => console.log(`listening on port ${port}`))
