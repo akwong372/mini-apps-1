@@ -10,9 +10,8 @@ $( document ).ready(function() {
      contentType: false,
      processData: false,
      success: (data) => {
-      //  console.log(data)
-      //  console.log($('form')[0])
        $('#successErrorMsg').text('Success!');
+       $('#downloadBtn').text('Download CSV');
        $('footer').text(data);
      },
      error: function(data){

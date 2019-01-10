@@ -20,13 +20,8 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
-// app.set('view engine', 'ejs');
 app.use(fileUpload());
 app.use(express.static('client'));
-// app.use(bodyParser.urlencoded({
-//   extended: true
-// }));
-// app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('test');
@@ -36,34 +31,17 @@ app.post('/', (req, res) => {
   if (Object.keys(req.files).length === 0) {
     return res.status(400).redirect('/');
   }
+  console.log(req.files.jsonUpload.name)
 
   var response = jsonHandle(JSON.parse(req.files.jsonUpload.data));
   fs.writeFile('new_csv_report.csv', response, 'utf8', (err) => {
     if (err) {
       console.log('something went wrong', err);
-      //res.redirect('/');
+      res.redirect('/');
     }
   })
   console.log('success', req.files);
-  res.send(response)
-  // res.send(`<body>
-  //  <header>
-  //    <h1>interesting title</h1>
-  //  </header>
-  //  <main>
-  //    <div id="formArea">
-  //      <form id="mainForm" method="POST" action="/" accept="application/JSON" enctype="multipart/form-data">
-  //        Enter data and stuff:
-  //        <br>
-  //        <input name="jsonUpload" id="jsonUpload" type="file">
-  //        <br>
-  //        <input type="submit">
-  //      </form>
-  //    </div>
-  //    <p id="successErrorMsg">Success!</p>
-  //  </main>
-  //  <footer style="white-space: pre-line">${response}</footer>
-  //  </body>` );
+  res.send(response);
 });
 
 //function to handle submitted json
@@ -71,7 +49,7 @@ var jsonHandle = (jsonObj) => {
   var csvResult = [];
   var personData = [];
   //create an array of columns
-  var columns = Object.keys(jsonObj).slice(0, 6);
+  var columns = Object.keys(jsonObj).slice(0, Object.keys(jsonObj).length - 1);
 
   csvResult.push(columns);
 
