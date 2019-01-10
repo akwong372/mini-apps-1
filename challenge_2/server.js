@@ -24,7 +24,8 @@ app.use(fileUpload());
 app.use(express.static('client'));
 
 app.get('/', (req, res) => {
-  res.send('test');
+  console.log('get request')
+  res.sendFile('new_csv_report.csv', { root: __dirname });
 });
 
 app.post('/', (req, res) => {
@@ -34,7 +35,7 @@ app.post('/', (req, res) => {
   console.log(req.files.jsonUpload.name)
 
   var response = jsonHandle(JSON.parse(req.files.jsonUpload.data));
-  fs.writeFile('new_csv_report.csv', response, 'utf8', (err) => {
+  fs.writeFile('client/new_csv_report.csv', response, 'utf8', (err) => {
     if (err) {
       console.log('something went wrong', err);
       res.redirect('/');
@@ -43,6 +44,7 @@ app.post('/', (req, res) => {
   console.log('success', req.files);
   res.send(response);
 });
+
 
 //function to handle submitted json
 var jsonHandle = (jsonObj) => {
