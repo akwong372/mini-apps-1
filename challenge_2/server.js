@@ -50,25 +50,37 @@ app.post('/', (req, res) => {
 var jsonHandle = (jsonObj) => {
   var csvResult = [];
   var personData = [];
+  var columns = [];
   //create an array of columns
-  var columns = Object.keys(jsonObj).slice(0, Object.keys(jsonObj).length - 1);
+  var tempColumns = Object.keys(jsonObj).slice(0, Object.keys(jsonObj).length - 1);
 
-  columns.unshift('RowID');
+  columns.push('RowID');
+  columns.push('ParentID');
+  tempColumns.forEach(item => columns.push(item));
   csvResult.push(columns);
 
   //adds a new row for every object
   var addRow = (obj) => {
-    personData.push(csvResult.length);
-    for (var i = 0; i < columns.length; i++) {
-      personData.push(obj[columns[i]]);
+    var currentRow = csvResult.length;
+    personData.unshift(currentRow);
+
+    if (currentRow === 1) {
+      personData.push('')
     }
-    personData = personData.filter(item => item !== undefined);
+
+    for (var i = 0; i < columns.length; i++) {
+      if (obj[columns[i]]) {
+        personData.push(obj[columns[i]]);
+      }
+    }
+    //personData = personData.filter(item => item !== undefined);
     csvResult.push(personData.join(','));
     personData = [];
 
     //call function on children if the children array is not empty
     if (obj.children.length > 0) {
       for (var i = 0; i < obj.children.length; i++) {
+        personData.push(currentRow)
         addRow(obj.children[i]);
       }
     }
