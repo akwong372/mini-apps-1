@@ -1,4 +1,7 @@
 $(document).ready(function () {
+  $('#jsonUpload').on('click', function (e){
+    console.log('clicked')
+  })
   $('#mainForm').on('submit', function (e) {
     e.preventDefault();
 

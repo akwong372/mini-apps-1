@@ -53,13 +53,16 @@ var jsonHandle = (jsonObj) => {
   //create an array of columns
   var columns = Object.keys(jsonObj).slice(0, Object.keys(jsonObj).length - 1);
 
+  columns.unshift('RowID');
   csvResult.push(columns);
 
   //adds a new row for every object
   var addRow = (obj) => {
+    personData.push(csvResult.length);
     for (var i = 0; i < columns.length; i++) {
       personData.push(obj[columns[i]]);
     }
+    personData = personData.filter(item => item !== undefined);
     csvResult.push(personData.join(','));
     personData = [];
 
