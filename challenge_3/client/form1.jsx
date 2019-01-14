@@ -2,7 +2,7 @@ var NameEmailPass = (props) =>
   (
     <div>
       <h1>Account Creation</h1>
-      <form method='POST' action='/'>
+      <form method='POST' action='/' onSubmit={(e)=>{e.persist(); props.handleSubmit(e);}}>
         <label htmlFor='username'>Enter Username: </label>
         <input type='text' id='username' placeholder='Username'/>
         <br/>

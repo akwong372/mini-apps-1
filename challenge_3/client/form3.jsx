@@ -4,7 +4,7 @@ var CreditInfo = (props) =>
       <h1>Payment Information</h1>
       <form method='POST' action='/'>
         <label htmlFor='creditcard'>Enter Credit Card Information: </label>
-        <input type='text' id='creditcard' pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"placeholder='0000 0000 0000 0000'/>
+        <input type='text' id='creditcard' pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"placeholder='0000 0000 0000 0000'/>
         <br/>
         <label htmlFor='expire'>Enter Expiry Date: </label>
         <input type='month' id='expire'/>
