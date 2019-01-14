@@ -2,7 +2,7 @@ var AddressInfo = (props) =>
   (
     <div>
       <h1>Shipping Information</h1>
-      <form method='POST' action='/'>
+      <form method='POST' action='/' onSubmit={(e)=>{e.persist(); props.handleSubmit(e);}}>
         <label htmlFor='address'>Enter Shipping Address: </label>
         <br />
         <input type='text' id='address1' maxLength='100' placeholder='Address Line 1' />
@@ -19,7 +19,7 @@ var AddressInfo = (props) =>
         <input type='text' id='zipcode' maxLength='8' size='10' placeholder='Zip Code' />
         <br />
         <label htmlFor="phone">Enter your phone number:</label>
-        <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+        <input type="tel" id="phone" name="phone" pattern="([0-9]{3})[0-9]{3}[0-9]{4}" placeholder='(555)5555555' />
         <br/>
         <input type='submit' value='Next' />
       </form>

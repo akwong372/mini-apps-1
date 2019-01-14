@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   console.log('post', req.body)
-  res.redirect('/');
+  res.send('thing');
 });
 
 app.listen(port, () => {

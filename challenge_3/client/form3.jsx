@@ -2,7 +2,7 @@ var CreditInfo = (props) =>
   (
     <div>
       <h1>Payment Information</h1>
-      <form method='POST' action='/'>
+      <form method='POST' action='/' onSubmit={(e)=>{e.persist(); props.handleSubmit(e);}}>
         <label htmlFor='creditcard'>Enter Credit Card Information: </label>
         <input type='text' id='creditcard' pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"placeholder='0000 0000 0000 0000'/>
         <br/>
