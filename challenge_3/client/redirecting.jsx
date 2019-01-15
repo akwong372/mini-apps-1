@@ -10,7 +10,7 @@ var Redirecting = (props) => {
         return <CompleteCheckout goBack={props.goBack} nextPage={props.nextPage} user={props.user} />;
       default:
         return <form onSubmit={props.nextPage}>
-          <input type='submit' value='Checkout' />
+          <input type='submit' className='btn btn-primary' value='Checkout' />
         </form>
     }
   }

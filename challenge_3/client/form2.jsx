@@ -1,6 +1,6 @@
 var AddressInfo = (props) =>
   (
-    <div>
+    <div className='container'>
       <h1>Shipping Information</h1>
       <form method='POST' action='/' onSubmit={(e)=>{e.persist(); props.handleSubmit(e);}}>
         <label htmlFor='address'>Enter Shipping Address: </label>
@@ -21,10 +21,10 @@ var AddressInfo = (props) =>
         <label htmlFor="phone">Enter your phone number: </label>
         <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder='1234567890' required/>
         <br/>
-        <input type='submit' value='Next' />
+        <input type='submit' className='btn btn-primary' value='Next' />
       </form>
       <br/>
-      <button onClick={props.goBack}>Back</button>
+      <button onClick={props.goBack} className='btn btn-info'>Back</button>
     </div>
   )
 

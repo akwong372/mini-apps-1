@@ -29,7 +29,7 @@ class CompleteCheckout extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='container'>
         <h1>Review Your Order</h1>
         <br />
         <div>
@@ -55,10 +55,10 @@ class CompleteCheckout extends React.Component {
         </div>
         <br />
         <form method='POST' action='/' onSubmit={this.props.nextPage}>
-          <input type='submit' value='Purchase' />
+          <input type='submit' className='btn btn-success' value='Purchase' />
         </form>
         <br/>
-      <button onClick={props.goBack}>Back</button>
+      <button onClick={this.props.goBack} className='btn btn-info'>Back</button>
       </div>
     )
   }

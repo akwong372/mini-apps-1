@@ -1,6 +1,6 @@
 var CreditInfo = (props) =>
   (
-    <div>
+    <div className='container'>
       <h1>Payment Information</h1>
       <form method='POST' action='/' onSubmit={(e)=>{e.persist(); props.handleSubmit(e);}}>
         <label htmlFor='creditcard'>Enter Credit Card Information: </label>
@@ -15,10 +15,10 @@ var CreditInfo = (props) =>
         <label htmlFor='billzipcode'>Enter Billing Zip Code: </label>
         <input type='text' id='billzipcode' maxLength='8' size='10' placeholder='123456' required/>
         <br/>
-        <input type='submit' value='Next'/>
+        <input type='submit' className='btn btn-primary' value='Next'/>
       </form>
       <br/>
-      <button onClick={props.goBack}>Back</button>
+      <button onClick={props.goBack} className='btn btn-info'>Back</button>
     </div>
   )
 

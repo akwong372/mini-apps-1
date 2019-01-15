@@ -1,6 +1,6 @@
 var NameEmailPass = (props) =>
   (
-    <div>
+    <div className='container'>
       <h1>Account Creation</h1>
       <form method='POST' action='/' onSubmit={(e)=>{e.persist(); props.handleSubmit(e);}}>
         <label htmlFor='username'>Enter Username: </label>
@@ -12,10 +12,10 @@ var NameEmailPass = (props) =>
         <label htmlFor='email'>Enter Email Address: </label>
         <input type='email' id='email' placeholder='example@email.com'/>
         <br/>
-        <input type='submit' value='Next'/>
+        <input type='submit' className='btn btn-primary' value='Next'/>
       </form>
       <br/>
-      <button onClick={props.goBack}>Back</button>
+      <button onClick={props.goBack} className='btn btn-info'>Back</button>
     </div>
   )
 
