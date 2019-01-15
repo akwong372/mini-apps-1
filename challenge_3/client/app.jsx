@@ -73,7 +73,7 @@ class App extends React.Component {
         <h1>A React Component</h1>
         <h2>test state {this.state.page}</h2>
         <div>
-          <Redirecting appPage={this.state.page} nextPage={this.nextPage} handleSubmit={this.handleSubmit} />
+          <Redirecting appPage={this.state.page} nextPage={this.nextPage} handleSubmit={this.handleSubmit} user={this.state.user}/>
         </div>
       </div>
     )
