@@ -39,7 +39,7 @@ class CompleteCheckout extends React.Component {
           <br />
           <h2>Shipping Information</h2>
           {Object.keys(this.state.shippingInfo).map((item) => {
-            return <div>
+            return <div key={item}>
               <span key={item}>{item}: {this.state.shippingInfo[item]}</span>
               <br />
             </div>
@@ -47,7 +47,7 @@ class CompleteCheckout extends React.Component {
           <br />
           <h2>Billing Information</h2>
           {Object.keys(this.state.billingInfo).map((item) => {
-            return <div>
+            return <div key={item}>
             <span key={item}>{item}: {this.state.billingInfo[item]}</span>
             <br />
           </div>

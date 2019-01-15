@@ -1,5 +1,3 @@
-// import axios from 'axios';
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +7,6 @@ class App extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleGet = this.handleGet.bind(this);
     this.nextPage = this.nextPage.bind(this);
   }
 
@@ -41,37 +38,19 @@ class App extends React.Component {
         user: data.username
       })
     }
-    console.log(data)
     axios.post('/', data)
       .then(function (response) {
         console.log('posted data', response);
-
-        // return response
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
-  // handleGet(e) {
-  //   e.preventDefault();
-  //   this.nextPage();
-  //   axios.get('/data')
-  //   .then(function (response) {
-  //     console.log('get data', response);
-
-  //     // return response
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
-
   render() {
     return (
       <div>
-        <h1>A React Component</h1>
-        <h2>test state {this.state.page}</h2>
+        <h1>Welcome to Nozama.com</h1>
         <div>
           <Redirecting appPage={this.state.page} nextPage={this.nextPage} handleSubmit={this.handleSubmit} user={this.state.user}/>
         </div>
