@@ -6,8 +6,10 @@ var Redirecting = (props) => {
         return <AddressInfo handleSubmit={props.handleSubmit} />;
       case 3:
         return <CreditInfo handleSubmit={props.handleSubmit} />;
+      case 4:
+        return <CompleteCheckout nextPage={props.nextPage} />;
       default:
-        return <form>
+        return <form onSubmit={props.nextPage}>
           <input type='submit' value='Checkout' />
         </form>
     }

@@ -19,7 +19,7 @@ var AddressInfo = (props) =>
         <input type='text' id='zipcode' maxLength='8' size='10' placeholder='Zip Code' />
         <br />
         <label htmlFor="phone">Enter your phone number:</label>
-        <input type="tel" id="phone" name="phone" pattern="([0-9]{3})[0-9]{3}[0-9]{4}" placeholder='(555)5555555' />
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder='1234567890' />
         <br/>
         <input type='submit' value='Next' />
       </form>
