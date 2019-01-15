@@ -18,7 +18,7 @@ var AddressInfo = (props) =>
         <label htmlFor='zipcode'>Enter Zip Code: </label>
         <input type='text' id='zipcode' maxLength='8' size='10' placeholder='123456' required/>
         <br />
-        <label htmlFor="phone">Enter your phone number:</label>
+        <label htmlFor="phone">Enter your phone number: </label>
         <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder='1234567890' required/>
         <br/>
         <input type='submit' value='Next' />
