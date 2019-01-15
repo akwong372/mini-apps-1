@@ -17,6 +17,8 @@ var CreditInfo = (props) =>
         <br/>
         <input type='submit' value='Next'/>
       </form>
+      <br/>
+      <button onClick={props.goBack}>Back</button>
     </div>
   )
 

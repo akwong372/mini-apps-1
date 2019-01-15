@@ -57,6 +57,8 @@ class CompleteCheckout extends React.Component {
         <form method='POST' action='/' onSubmit={this.props.nextPage}>
           <input type='submit' value='Purchase' />
         </form>
+        <br/>
+      <button onClick={props.goBack}>Back</button>
       </div>
     )
   }

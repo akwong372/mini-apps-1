@@ -8,6 +8,7 @@ class App extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.nextPage = this.nextPage.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   nextPage() {
@@ -26,6 +27,16 @@ class App extends React.Component {
     }
   }
 
+  goBack() {
+    if (this.state.page > 0) {
+      var minusPage = this.state.page;
+      minusPage--;
+      this.setState({
+        page: minusPage
+      })
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     this.nextPage();
@@ -40,7 +51,6 @@ class App extends React.Component {
     }
     axios.post('/', data)
       .then(function (response) {
-        console.log('posted data', response);
       })
       .catch((err) => {
         console.log(err)
@@ -52,7 +62,7 @@ class App extends React.Component {
       <div>
         <h1>Welcome to Nozama.com</h1>
         <div>
-          <Redirecting appPage={this.state.page} nextPage={this.nextPage} handleSubmit={this.handleSubmit} user={this.state.user}/>
+          <Redirecting goBack={this.goBack} appPage={this.state.page} nextPage={this.nextPage} handleSubmit={this.handleSubmit} user={this.state.user}/>
         </div>
       </div>
     )
