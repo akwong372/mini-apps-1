@@ -9,7 +9,7 @@ class Square extends React.Component {
 
   render() {
     return (
-      <div className='square'>
+      <div className='square' onClick={(e)=>{e.persist(); this.props.placePiece(e)}}>
         [  ]
       </div>
     )
