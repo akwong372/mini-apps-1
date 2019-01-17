@@ -5,6 +5,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPlayer: '',
+      redSpaces: [],
+      yellowSpaces: []
     }
     this.placePiece = this.placePiece.bind(this)
   }
@@ -21,9 +23,9 @@ class App extends React.Component {
     }
   }
 
-  dropPiece(e) {
-    console.log('X: ',e.target.attributes.x);
-    console.log('Y: ',e.target.attributes.y);
+  dropPiece(e) { //place pieces starting from bottom
+    // console.log('X: ',e.target.attributes.x);
+    // console.log('Y: ',e.target.attributes.y);
     console.log(e.target.parentNode.children);
     var column = e.target.parentNode.children;
     for (var i = column.length-1; i > 0; i--){
@@ -35,7 +37,18 @@ class App extends React.Component {
   }
 
   placePiece(space) {
+    var xCoord = Number(space.attributes.x.value);
+    var yCoord = Number(space.attributes.y.value);
     if (space.textContent !== '[R]' && space.textContent !== '[Y]') {
+      if (this.state.currentPlayer === '[R]'){
+        this.setState({
+          redSpaces: [...this.state.redSpaces, [xCoord, yCoord]]
+        }, ()=>console.log(this.state))
+      } else if (this.state.currentPlayer === '[Y]') {
+        this.setState({
+          yellowSpaces: [...this.state.yellowSpaces, [xCoord, yCoord]]
+        }, ()=>console.log(this.state))
+      }
       space.textContent = this.state.currentPlayer;
       this.switchPlayer();
     }
