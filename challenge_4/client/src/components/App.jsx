@@ -5,6 +5,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPlayer: '',
+      yCoords: [0, 1, 2, 3, 4, 5],
+      xCoords: [0, 1, 2, 3, 4, 5, 6],
       redSpaces: [],
       yellowSpaces: []
     }
@@ -26,10 +28,10 @@ class App extends React.Component {
   dropPiece(e) { //place pieces starting from bottom
     // console.log('X: ',e.target.attributes.x);
     // console.log('Y: ',e.target.attributes.y);
-    console.log(e.target.parentNode.children);
+    // console.log(e.target.parentNode.children);
     var column = e.target.parentNode.children;
-    for (var i = column.length-1; i > 0; i--){
-      if (column[i].textContent === '[  ]'){
+    for (var i = column.length - 1; i >= 0; i--) {
+      if (column[i].textContent === '[  ]') {
         this.placePiece(column[i]);
         break;
       }
@@ -40,17 +42,45 @@ class App extends React.Component {
     var xCoord = Number(space.attributes.x.value);
     var yCoord = Number(space.attributes.y.value);
     if (space.textContent !== '[R]' && space.textContent !== '[Y]') {
-      if (this.state.currentPlayer === '[R]'){
+      if (this.state.currentPlayer === '[R]') {
         this.setState({
           redSpaces: [...this.state.redSpaces, [xCoord, yCoord]]
-        }, ()=>console.log(this.state))
+        }, ()=>this.checkColumnWin())
       } else if (this.state.currentPlayer === '[Y]') {
         this.setState({
           yellowSpaces: [...this.state.yellowSpaces, [xCoord, yCoord]]
-        }, ()=>console.log(this.state))
+        }, ()=>this.checkColumnWin())
       }
       space.textContent = this.state.currentPlayer;
       this.switchPlayer();
+    }
+  }
+
+  checkColumnWin() {
+    var currColumn = [];
+    for (var i = 0; i < this.state.xCoords.length; i++) {
+      if (this.state.currentPlayer === '[Y]') {
+        currColumn = this.state.redSpaces.map((pair) => {
+          if (pair[0] === i) {
+            return pair[1];
+          }
+        }).filter((item) => item !== undefined);
+      } else if (this.state.currentPlayer === '[R]') {
+        currColumn = this.state.yellowSpaces.map((pair) => {
+          if (pair[0] === i) {
+            return pair[1];
+          }
+        }).filter((item) => item !== undefined);
+      }
+      console.log(`column ${i}: `, currColumn);
+      if (currColumn.length>3){
+        for (var i = 0; i < 2; i++){
+          if ((currColumn[i] || currColumn[i] === 0) && currColumn[i+1] && currColumn[i+2] && currColumn[i+3]){
+            console.log('win')
+          }
+        }
+        break;
+      }
     }
   }
 
@@ -62,7 +92,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='container row' onClick={(e) => {this.dropPiece(e)}}>
+      <div className='container row' onClick={(e) => { this.dropPiece(e) }}>
         <div id='column0'>
           <Square y={5} x={0} placePiece={this.placePiece} currentPlayer={this.state.currentPlayer} />
           <Square y={4} x={0} placePiece={this.placePiece} currentPlayer={this.state.currentPlayer} />
