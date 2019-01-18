@@ -5,10 +5,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentPlayer: '',
+      remainingSpaces: 42,
       yCoords: [5, 4, 3, 2, 1, 0],
       xCoords: [0, 1, 2, 3, 4, 5, 6],
       redSpaces: [],
-      yellowSpaces: []
+      yellowSpaces: [],
+      win: ''
     }
     this.placePiece = this.placePiece.bind(this)
   }
@@ -16,11 +18,13 @@ class App extends React.Component {
   switchPlayer() {
     if (this.state.currentPlayer === '[R]') {
       this.setState({
-        currentPlayer: '[Y]'
+        currentPlayer: '[Y]',
+        remainingSpaces: this.state.remainingSpaces--
       });
     } else {
       this.setState({
-        currentPlayer: '[R]'
+        currentPlayer: '[R]',
+        remainingSpaces: this.state.remainingSpaces--
       });
     }
   }
@@ -41,10 +45,12 @@ class App extends React.Component {
     if (space.textContent !== '[R]' && space.textContent !== '[Y]') {
       if (this.state.currentPlayer === '[R]') {
         this.setState({
+          remainingSpaces: this.state.remainingSpaces--,
           redSpaces: [...this.state.redSpaces, [xCoord, yCoord]]
         }, () => this.checkWin())
       } else if (this.state.currentPlayer === '[Y]') {
         this.setState({
+          remainingSpaces: this.state.remainingSpaces--,
           yellowSpaces: [...this.state.yellowSpaces, [xCoord, yCoord]]
         }, () => this.checkWin())
       }
@@ -80,6 +86,9 @@ class App extends React.Component {
         for (var i = 0; i < 2; i++) {
           if ((currColumn[i] && currColumn.includes(currColumn[i] + 1) && currColumn.includes(currColumn[i] + 2) && currColumn.includes(currColumn[i] + 3)) || (currColumn[i] === 0 && currColumn[1] === 1 && currColumn[2] === 2 && currColumn[3] === 3)) {
             console.log(`${currPlayer} wins`)
+            this.setState({
+              win: `${currPlayer}`
+            });
           }
         }
         break;
@@ -115,6 +124,9 @@ class App extends React.Component {
 
           if ((currRow[i] && currRow.includes(currRow[i] + 1) && currRow.includes(currRow[i] + 2) && currRow.includes(currRow[i] + 3)) || (currRow[i] === 0 && currRow[1] === 1 && currRow[2] === 2 && currRow[3] === 3)) {
             console.log(`${currPlayer} wins`)
+            this.setState({
+              win: `${currPlayer}`
+            });
           }
         }
         break;
@@ -143,7 +155,10 @@ class App extends React.Component {
           && currDiag.toString().includes([currDiag[i][0] + 1, currDiag[i][1] + 1].toString())
           && currDiag.toString().includes([currDiag[i][0] + 2, currDiag[i][1] + 2].toString())
           && currDiag.toString().includes([currDiag[i][0] + 3, currDiag[i][1] + 3].toString())) {
-          console.log('thing')
+          console.log(`${currPlayer} wins`)
+          this.setState({
+            win: `${currPlayer}`
+          });
         }
 
         //bottom right to top left
@@ -151,7 +166,10 @@ class App extends React.Component {
           && currDiag.toString().includes([currDiag[i][0] - 1, currDiag[i][1] + 1].toString())
           && currDiag.toString().includes([currDiag[i][0] - 2, currDiag[i][1] + 2].toString())
           && currDiag.toString().includes([currDiag[i][0] - 3, currDiag[i][1] + 3].toString())) {
-          console.log('thing2')
+          console.log(`${currPlayer} wins`)
+          this.setState({
+            win: `${currPlayer}`
+          });
         }
       }
     }
@@ -163,6 +181,11 @@ class App extends React.Component {
     this.checkDiagWin();
   }
 
+  // alertWin(winner) {
+  //   window.alert(`${winner} wins`)
+  //   this.forceUpdate();
+  // }
+
 
   componentDidMount() {
     this.setState({
@@ -171,6 +194,16 @@ class App extends React.Component {
   }
 
   render() {
+    let winner;
+
+    if (this.state.win === 'Red'){
+      winner = <div>Red wins!</div>
+    } else if (this.state.win === 'Yellow'){
+      winner = <div>Yellow wins!</div>
+    } else if (this.state.win === '' && this.state.remainingSpaces <= 0){
+      winner = <div>It's a tie!</div>
+    }
+
     return (
       <div className='container row' onClick={(e) => { this.dropPiece(e) }}>
         <div id='column0'>
@@ -194,6 +227,7 @@ class App extends React.Component {
         <div id='column6'>
           {this.state.yCoords.map((coord) => <Square key={`c6${coord}`} y={coord} x={6} placePiece={this.placePiece} currentPlayer={this.state.currentPlayer} />)}
         </div>
+        {winner}
       </div>
     )
   }
