@@ -178,12 +178,6 @@ class App extends React.Component {
     this.checkDiagWin();
   }
 
-  // alertWin(winner) {
-  //   window.alert(`${winner} wins`)
-  //   this.forceUpdate();
-  // }
-
-
   componentDidMount() {
     this.setState({
       currentPlayer: '[R]'

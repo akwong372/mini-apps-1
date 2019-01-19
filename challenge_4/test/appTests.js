@@ -1,12 +1,4 @@
-// var assert = require('assert');
-// var chai = require('chai');
-var expect = require('chai').expect
-  , foo = 'bar'
-  , beverages = { tea: ['chai', 'matcha', 'oolong'] };
-// var chaiHttp = require('chai-http');
-// var app = require('../client/src/components/App.jsx');
-//  console.log(app)
-// chai.use(chaiHttp);
+var expect = require('chai').expect;
 
 describe('Win Conditions', function () {
     this.state = {
@@ -177,29 +169,4 @@ describe('Win Conditions', function () {
 
       expect(winner).to.equal(`It's a tie!`);
     });
-  // describe('#indexOf()', function () {
-  //   it('should return -1 when the value is not present', function () {
-  //     expect([1, 2, 3].indexOf(4)).to.equal(-1);
-  //   });
-  // });
-
-
-//   describe('test', function () {
-//     it('should work', function () {
-
-//       chai.request('http://127.0.0.1:3000')
-//         .get('/')
-//         .then(function (data) {
-//           console.log(data.text)
-//         })
-//         .catch(function (err) {
-//           console.log('error', err)
-//         })
-
-//       expect(foo).to.be.a('string');
-      // expect(foo).to.equal('bar');
-//       expect(foo).to.have.lengthOf(3);
-//       expect(beverages).to.have.property('tea').with.lengthOf(3);
-//     })
-//   })
  });
