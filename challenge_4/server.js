@@ -5,7 +5,7 @@ const port = 3000;
 app.use(express.static('client/dist'))
 
 app.get('/', (req, res)=>{
-  res.send('test')
+  res.send(`Listening on port ${port}`)
 })
 
 app.listen(port, ()=>console.log(`Listening on port ${port}`));

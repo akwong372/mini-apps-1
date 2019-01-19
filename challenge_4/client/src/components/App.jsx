@@ -147,26 +147,23 @@ class App extends React.Component {
     }
 
     if (currDiag.length > 3) {
-      console.log(`${currPlayer}`, currDiag)
       for (var i = 0; i < currDiag.length; i++) {
 
         //bottom left to top right
-        if (currDiag.toString().includes([currDiag[i][0], currDiag[i][1]].toString())
-          && currDiag.toString().includes([currDiag[i][0] + 1, currDiag[i][1] + 1].toString())
-          && currDiag.toString().includes([currDiag[i][0] + 2, currDiag[i][1] + 2].toString())
-          && currDiag.toString().includes([currDiag[i][0] + 3, currDiag[i][1] + 3].toString())) {
-          console.log(`${currPlayer} wins`)
+        if (JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0], currDiag[i][1]]))
+          && JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0] + 1, currDiag[i][1] + 1]))
+          && JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0] + 2, currDiag[i][1] + 2]))
+          && JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0] + 3, currDiag[i][1] + 3]))) {
           this.setState({
             win: `${currPlayer}`
           });
         }
 
         //bottom right to top left
-        if (currDiag.toString().includes([currDiag[i][0], currDiag[i][1]].toString())
-          && currDiag.toString().includes([currDiag[i][0] - 1, currDiag[i][1] + 1].toString())
-          && currDiag.toString().includes([currDiag[i][0] - 2, currDiag[i][1] + 2].toString())
-          && currDiag.toString().includes([currDiag[i][0] - 3, currDiag[i][1] + 3].toString())) {
-          console.log(`${currPlayer} wins`)
+        if (JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0], currDiag[i][1]]))
+          && JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0] - 1, currDiag[i][1] + 1]))
+          && JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0] - 2, currDiag[i][1] + 2]))
+          && JSON.stringify(currDiag).includes(JSON.stringify([currDiag[i][0] - 3, currDiag[i][1] + 3]))) {
           this.setState({
             win: `${currPlayer}`
           });
